@@ -25,6 +25,7 @@ export class HomePage {
   }
 
   consulta() {
+    this.array = [];
     console.log("hola: " + this.name);
 
     this.http.get("https://api.github.com/search/repositories?q=topic:" + this.name).subscribe((data) => {

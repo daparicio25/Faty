@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+//firebase
+import { AngularFirestore } from 'angularfire2/firestore';
+
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.page.html',
@@ -25,7 +28,7 @@ export class ModalPage implements OnInit {
   login?: string;
   pagehome?: string;
 
-  constructor() { }
+  constructor(private fire: AngularFirestore) { }
 
   ngOnInit() {
     var objJson = JSON.parse(this.strJson);
@@ -45,6 +48,13 @@ export class ModalPage implements OnInit {
     console.log(this.created_at);
     console.log(this.login);
     console.log(this.pagehome);
+  }
+
+  save() {
+    var objJson = JSON.parse(this.strJson);
+
+    let idDoc = this.fire.createId();
+    this.fire.doc("/Repositorios/" + idDoc).set(objJson.items[this.index]);
   }
 
 }
