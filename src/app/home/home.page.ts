@@ -26,31 +26,28 @@ export class HomePage {
 
   consulta() {
     this.array = [];
-    console.log("hola: " + this.name);
 
     this.http.get("https://api.github.com/search/repositories?q=topic:" + this.name).subscribe((data) => {
       this.strJson = JSON.stringify(data);
       var objJson = JSON.parse(this.strJson);
 
-      console.log(objJson.items);
-
       for (let i = 0; i < objJson.items.length; i++) {
-        this.array.push({
-          avatar_url: objJson.items[i].owner.avatar_url,
-          name: objJson.items[i].name,
-          language: objJson.items[i].language,
-          url: objJson.items[i].url,
-          created_at: objJson.items[i].created_at,
-          login: objJson.items[i].owner.login,
-          homepage: objJson.items[i].homepage
-        });
+        if (i <= 14) {
+          this.array.push({
+            avatar_url: objJson.items[i].owner.avatar_url,
+            name: objJson.items[i].name,
+            language: objJson.items[i].language,
+            url: objJson.items[i].url,
+            created_at: objJson.items[i].created_at,
+            login: objJson.items[i].owner.login,
+            homepage: objJson.items[i].homepage
+          });
+        }
       }
     });
   }
 
   async abrir_modal(index: number) {
-    console.log("index: " + index);
-
     const modal = await this.modalController.create({
       component: ModalPage,
       componentProps: {
