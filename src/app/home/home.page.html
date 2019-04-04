@@ -7,5 +7,25 @@
 </ion-header>
 
 <ion-content>
-  
+  <!-- Input with placeholder -->
+  <ion-input type="text" [(ngModel)]="name" placeholder="Buscar..."></ion-input>
+  <br>
+  <ion-button color="primary" (click)="consulta()">Buscar</ion-button>
+
+  <br>
+  <br>
+  <br>
+  <ion-list align-items-center>
+    <ion-list-header text-center color="primary">
+      <ion-label>Avatar</ion-label>
+      <ion-label>Name</ion-label>
+      <ion-label>Language</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let arr of array; let i = index" (click)=abrir_modal(i)>
+      <ion-label text-left><img src={{arr.avatar_url}} alt="" width="50px" height="50px"></ion-label>
+      <ion-label text-center>{{ arr.name }}</ion-label>
+      <ion-label text-right>{{ arr.language }}</ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
