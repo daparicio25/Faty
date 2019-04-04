@@ -18,6 +18,7 @@ export class HomePage {
 
   name:string;
   array: Datos[] = [];
+  strJson: string = "";
 
   constructor(private fire: AngularFirestore, private http: HttpClient, public alertController: AlertController, public modalController: ModalController) {
 
@@ -27,8 +28,9 @@ export class HomePage {
     console.log("hola: " + this.name);
 
     this.http.get("https://api.github.com/search/repositories?q=topic:" + this.name).subscribe((data) => {
-      var strJson = JSON.stringify(data);
-      var objJson = JSON.parse(strJson);
+      this.strJson = JSON.stringify(data);
+      var objJson = JSON.parse(this.strJson);
+
       console.log(objJson.items);
 
       for (let i = 0; i < objJson.items.length; i++) {
@@ -51,13 +53,16 @@ export class HomePage {
     const modal = await this.modalController.create({
       component: ModalPage,
       componentProps: {
+        strJson: this.strJson,
+        index: index
+        /*
         avatar: this.array[index].avatar_url,
         name: this.array[index].name,
         language: this.array[index].language,
         url: this.array[index].url,
         created_at: this.array[index].created_at,
         login: this.array[index].login,
-        homepage: this.array[index].homepage
+        homepage: this.array[index].homepage*/
       }
     });
     await modal.present();
